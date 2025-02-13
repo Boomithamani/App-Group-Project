@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8978adc-2fa5-46d4-8332-ef095bd1763b" name="Changes" comment="add">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d8978adc-2fa5-46d4-8332-ef095bd1763b" name="Changes" comment="add" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +45,7 @@
     "Python.__init__.executor": "Run",
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Rebasing main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/nicol/OneDrive/Dokumen/Y1S2/AppDPJ/SimpleWebApplication - Copy - Copy (2)"
   }
 }]]></component>
