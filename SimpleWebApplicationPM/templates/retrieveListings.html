@@ -1,0 +1,187 @@
+{% extends "base2.html" %}
+
+{% block title %}Retrieve Listings - Seller{% endblock %}
+
+{% block content %}
+<h1>Seller Listings ({{ listings_count }})</h1>
+
+{% if listings %}
+    <div class="listings">
+        {% for listing_id, listing in listings.items() %}
+            <div class="listing">
+                <!-- Picture on top -->
+                <img src="{{ url_for('uploaded_file', filename=listing['picture']) }}" alt="{{ listing['name'] }}" class="listing-img">
+
+                <div class="listing-details">
+                    <!-- Name, Category, Size, Price -->
+                    <h3><strong>{{ listing['name'] }}</strong></h3>
+                    <p><strong>Category:</strong> {{ listing['category'] }}</p>
+                    <p><strong>Size:</strong> {{ listing['sizing'] }}</p>
+                    <p><strong>Price:</strong> ${{ "%.2f"|format(listing['price']|float) }}</p>
+                </div>
+
+                <div class="listing-actions">
+                    <a href="{{ url_for('update_listing', id=listing_id) }}">
+                        <button class="edit-btn">Update</button>
+                    </a>
+                    <!-- Delete Button -->
+                    <button class="delete-btn" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ listing_id }}">Delete</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No listings available</p>
+{% endif %}
+
+<!-- Modal for Delete Confirmation -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this listing?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <form id="deleteForm" method="POST" action="">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<a href="/homeS" class="back">← Back</a>
+<!-- Add jQuery and Bootstrap JS for the modal to function -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Set the listing ID for deletion in the modal
+  $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var listingId = button.data('id'); // Extract the listing ID from data-id attribute
+    var formAction = '/deleteListings/' + listingId;
+
+    // Set the action of the form to the correct URL for deletion
+    $('#deleteForm').attr('action', formAction);
+  });
+</script>
+
+<style>
+.back {
+    color: black !important;
+    margin-left: 0;
+    text-decoration: none;
+    font-size: 26px;
+}
+.back:hover {
+    color: #cccccc !important;
+}
+/* Container for all listings */
+.listings {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns in a row */
+    gap: 20px; /* Space between items */
+    margin-top: 20px;
+}
+
+/* Styling for individual listings */
+.listing {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Ensure that images are responsive and fit within the listing */
+.listing-img {
+    width: 100%;  /* Ensures the image fills its container */
+    height: auto; /* Keeps the aspect ratio of the image intact */
+    border-radius: 8px;
+    object-fit: cover; /* Ensures the image covers the container without overflow */
+}
+
+/* Styling for the details inside the listing */
+.listing-details {
+    margin-top: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-bottom: 10px;
+}
+
+.listing-details h3,
+.listing-details p {
+    margin-bottom: 5px;
+    font-size: 19px;
+}
+
+.listing-details p {
+    font-size: 19px;
+}
+
+.listing-details p strong {
+    font-weight: 600;
+}
+
+.listing-details p {
+    font-weight: normal;
+}
+
+/* Styling for the actions (buttons) */
+.listing-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Styling for the buttons */
+.listing-actions button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #000000 !important;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #a72828 !important;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .listings {
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .listings {
+        grid-template-columns: 1fr; /* 1 item per row for smaller screens */
+    }
+}
+</style>
+
+{% endblock %}
