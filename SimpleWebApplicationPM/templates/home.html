@@ -1,0 +1,785 @@
+{% extends "base.html" %}
+
+{% block title %}Library Loan System - Home{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+<div class="banner">
+  <img src="/images/banner.png" class="img-fluid" alt="Banner">
+</div>
+
+  <!-- Filter Button -->
+  <div class="right-image-container">
+    <img src="/images/filter.png" alt="Filter" onclick="toggleFilter()" class="filter-button">
+  </div>
+</div>
+
+<div id="filterModal" class="filter-modal">
+    <div class="filter-content">
+        <span class="close" onclick="closeFilter()">&times;</span>
+        <h2>Filter Shirts</h2>
+
+        <!-- Category Dropdown -->
+        <label for="filterCategory">Category</label>
+        <select id="filterCategory">
+            <option value="women">Women</option>
+            <option value="men">Men</option>
+            <option value="kids">Kids</option>
+        </select>
+
+        <!-- Size Dropdown -->
+        <label for="sizing">Size</label>
+        <select id="sizing">
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+        </select>
+
+        <!-- Apply Filter Button -->
+        <button onclick="applyFilter()">Apply Filter</button>
+
+        <!-- Cancel Button -->
+        <button onclick="closeFilter()">Cancel</button>
+    </div>
+</div>
+
+<div class="content">
+            <div id="cartSidebar" class="cart-sidebar">
+              <div class="cart-sidebar-content">
+                <span class="close-btn" onclick="toggleCartSidebar()">&times;</span>
+                <h2>Your Cart</h2>
+                <div id="cartItems">
+                  <!-- Cart items will be dynamically added here -->
+                </div>
+                <button class="checkout" onclick="checkout()">Proceed to Checkout</button>
+              </div>
+            </div>
+            <div id="addToCartModal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <p id="modalMessage">Are you sure you want to add this shirt to your cart?</p>
+                <button onclick="confirmAddToCart()">Yes</button>
+                <button onclick="closeModal()">Cancel</button>
+              </div>
+            </div>
+
+            <div class="shirt">
+                <img src="/images/shirt1.png" alt="Black Sweater" class="shirt1" data-category="women" data-size="L" onclick="addToCart('Black Sweater', 20, 'L')">
+                <img src="/images/shirt2.png" alt="Blue Sweater" class="shirt2" data-category="women" data-size="M" onclick="addToCart('Blue Sweater', 19, 'M')">
+                <img src="/images/shirt3.png" alt="White Shirt" class="shirt3" data-category="women" data-size="S" onclick="addToCart('White Shirt', 10, 'S')">
+                <img src="/images/shirt4.png" alt="Black Shirt" class="shirt4" data-category="women" data-size="M" onclick="addToCart('Black Shirt', 8, 'M')">
+                <img src="/images/shirt5.png" alt="Adventure Time Shirt" class="shirt5" data-category="women" data-size="M" onclick="addToCart('Adventure Time Shirt', 15, 'M')">
+                <img src="/images/shirt6.png" alt="Funky Shirt" class="shirt6" data-category="women" data-size="S" onclick="addToCart('Funky Shirt', 13, 'S')">
+                <img src="/images/shirt7.png" alt="Shrimp Shirt" class="shirt7" data-category="women" data-size="L" onclick="addToCart('Shrimp Shirt', 10, 'L')">
+                <img src="/images/shirt8.png" alt="Denim Jacket" class="shirt8" data-category="women" data-size="L" onclick="addToCart('Denim Jacket', 22, 'L')">
+                <img src="/images/shirt9.png" alt="Cream Color Pants" class="shirt9" data-category="women" data-size="M" onclick="addToCart('Cream Color Pants', 25, 'M')">
+                <img src="/images/shirt10.png" alt="Black Cargo Pant" class="shirt10" data-category="women" data-size="L" onclick="addToCart('Black Cargo Pants', 26, 'L')">
+                <img src="/images/shirt11.png" alt="Black Pants" class="shirt11" data-category="women" data-size="L" onclick="addToCart('Black Pants', 21, 'L')">
+                <img src="/images/shirt12.png" alt="Ripped Jeans" class="shirt12" data-category="women" data-size="M" onclick="addToCart('Ripped Jeans', 25, 'M')">
+            </div>
+
+</div>
+<div class="footer">
+  <img src="/images/footer.png" class="img-fluid" alt="Footer">
+</div>
+
+<style>
+  .banner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    padding-top: 20px;
+  }
+
+  .add-to-cart-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black with transparency */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:last-child {
+    background-color: #f44336;
+}
+
+button:last-child:hover {
+    background-color: #e53935;
+}
+
+
+  .banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+.search-bar-container {
+  display: flex;
+  justify-content: space-between; /* Distribute items horizontally */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 20px; /* Add some space below */
+}
+
+.searchbar {
+  height: 60px; /* Adjust height */
+  width: auto; /* Keep aspect ratio */
+}
+
+.filter-button {
+  height: 60px;
+  width: auto;
+  cursor: pointer;
+  object-fit: contain;
+  display: block;
+  margin-left: auto;
+}
+
+  .right-image-container {
+    flex-shrink: 0;
+  }
+
+  .shirt1 {
+    height: 360px;
+    width: auto;
+  }
+
+  .shirt2 {
+    height: 360px;
+    width: auto;
+    margin-left: 2%;
+  }
+
+  .shirt3 {
+    height: 360px;
+    width: auto;
+    margin-left: 2%;
+  }
+
+  .shirt4 {
+    height: 360px;
+    width: auto;
+    margin-left: 2%;
+  }
+
+  .shirt5 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+  }
+
+  .shirt6 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+    margin-left: 2%;
+  }
+
+  .shirt7 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+    margin-left: 40px;
+  }
+
+  .shirt8 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+    margin-left: 2%;
+  }
+
+  .shirt9 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+  }
+  .shirt10 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+    margin-left: 2%;
+  }
+
+  .shirt11 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+    margin-left: 2%;
+  }
+
+  .shirt12 {
+    height: 360px;
+    width: auto;
+    margin-top: 2%;
+    margin-left: 2%;
+  }
+
+  .shirt {
+    margin-left: 25px;
+  }
+.shirt img {
+    position: relative;
+    z-index: 10; /* Set a high z-index value to ensure shirts are clickable */
+}
+
+  .footer {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 100px;
+  }
+
+.filter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none;
+    overflow: hidden;
+}
+
+.filter-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+.filter-content h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 650;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.filter-content label {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.filter-content select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.filter-content button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.filter-content button:last-child {
+    background-color: #f44336;
+}
+
+.filter-content button:hover {
+    background-color: #45a049;
+}
+
+.filter-content button:last-child:hover {
+    background-color: #e53935;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+/* Modal Container (background) */
+.modal {
+  display: flex; /* Use flexbox to center content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  position: fixed; /* Stay fixed in place */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay with semi-transparent background */
+  z-index: 9999; /* Ensure modal is on top of other content */
+}
+
+/* Modal Content Styling */
+.modal-content {
+  background-color: #f0f0f0; /* Lighter background */
+  padding: 25px 40px; /* More padding for a spacious look */
+  border-radius: 10px; /* Round corners for the modal */
+  width: 90%; /* Adjust the width to make it more compact */
+  max-width: 450px; /* Maximum width of the modal */
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow around modal */
+  position: relative; /* Position relative to place the close button */
+}
+
+/* Close Button Styling */
+.modal-content .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-content .close-btn:hover {
+  color: red; /* Red color when hovered */
+}
+
+/* Modal Heading Styling */
+#modalMessage {
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Modal Button Styling */
+button {
+  background-color: #4CAF50; /* Green color for the Confirm button */
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; /* Full width for buttons */
+  margin-bottom: 12px; /* Space between buttons */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+}
+
+button:last-child {
+  background-color: #f44336; /* Red color for Cancel button */
+}
+
+button:last-child:hover {
+  background-color: #e53935; /* Darker red on hover */
+}
+
+/* Cart Icon Styling */
+.cart-icon {
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+}
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px; /* Initially hidden to the right */
+  width: 300px;
+  height: 100%;
+  background-color: #f4f4f4; /* Light grey background */
+  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  transition: right 0.3s ease-in-out;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cart-sidebar-content {
+  color: #333; /* Dark text for readability */
+}
+
+.cart-sidebar h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align the items */
+    margin-bottom: 15px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.cart-item img {
+    width: 80px; /* Set the desired width */
+    height: 70px; /* Set the desired height */
+    object-fit: cover; /* This will crop the image to fit the container */
+    object-position: top; /* This centers the image within the crop */
+    overflow: hidden; /* Hides the part of the image that overflows the container */
+}
+
+
+.cart-item .item-details {
+    margin-bottom: 10px; /* Add space between the details and the button */
+}
+
+.cart-item button {
+    background-color: #f44336; /* Red color to remove */
+    color: white;
+    padding: 8px 20px; /* Reduced padding to make the button smaller */
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px; /* Reduced margin to lessen the space at the bottom */
+}
+
+.cart-item button:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
+.checkout {
+    background-color: #000000 !important; /* Black background */
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checkout:hover {
+    background-color: #333333; /* Darker black on hover */
+}
+
+
+.modal-content {
+  z-index: 99999; /* Ensure this has the highest layer */
+}
+.cart-sidebar {
+    z-index: 1000; /* Lower than shirt images */
+}
+
+.filter-modal {
+    z-index: 1000; /* Lower than shirt images */
+}
+
+.add-to-cart-modal {
+    display: none; /* Ensure it's hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black with transparency */
+    justify-content: center;
+    align-items: center;
+}
+@media (max-width: 768px) {
+  .shirt {
+    justify-content: center; /* Center images on smaller screens */
+  }
+
+  .cart-item {
+    flex-direction: row; /* Align items horizontally on small screens */
+  }
+}
+</style>
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || []; // Initialize cart from localStorage
+let currentShirtName = ""; // Declare this globally for current shirt name in modal
+let currentPrice = 0; // Declare price globally
+let currentSize = "";
+
+function addToCart(shirtName = "Unknown", price = 0, size = "N/A") {
+    const shirtElement = event.target; // The clicked image element
+    const shirtCategory = shirtElement.getAttribute('data-category') || "Unknown";
+    const shirtImage = shirtElement.src; // Get the image source URL
+
+    currentShirtName = shirtName;
+    currentPrice = price;
+    currentSize = size;
+    currentCategory = shirtCategory;
+    currentImage = shirtImage; // Save image for modal
+
+    const modalMessage = document.getElementById('modalMessage');
+    modalMessage.textContent = `Are you sure you want to add ${shirtName} to your cart?`;
+
+    const modal = document.getElementById('addToCartModal');
+    modal.style.display = 'flex';
+}
+
+function confirmAddToCart() {
+    // Modify the check to include the category, size, and name
+    let existingItem = cart.find(item =>
+        item.name === currentShirtName &&
+        item.size === currentSize &&
+        item.category === currentCategory);
+
+    if (!existingItem) {
+        // Add the item to the cart array if it doesn't exist
+        cart.push({
+            name: currentShirtName,
+            price: currentPrice,
+            size: currentSize,
+            category: currentCategory,
+            image: currentImage
+        });
+
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Update the cart sidebar and cart count
+        updateCartSidebar();
+        updateCartCount();
+
+        alert(`${currentShirtName} (Size: ${currentSize}, Category: ${currentCategory}) added to cart.`);
+    } else {
+        alert(`You have already added ${currentShirtName} (Size: ${currentSize}, Category: ${currentCategory}) to your cart.`);
+    }
+
+    // Close modal
+    closeModal();
+}
+
+
+
+
+
+// Function to close the modal
+function closeModal() {
+    const modal = document.getElementById('addToCartModal');
+    modal.style.display = 'none'; // Hide the modal
+}
+
+// Function to update the cart count on the navbar
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cartCountElement = document.getElementById('cartCount');
+
+    if (cart.length > 0) {
+        cartCountElement.textContent = cart.length;
+        cartCountElement.style.display = 'block'; // Show the cart count
+    } else {
+        cartCountElement.style.display = 'none'; // Hide if cart is empty
+    }
+}
+
+
+// Function to toggle the cart sidebar visibility
+function toggleCartSidebar() {
+    const cartSidebar = document.getElementById('cartSidebar');
+    const filterModal = document.getElementById('filterModal');
+
+    // Close filter modal if it's open
+    if (filterModal.style.display === 'flex') {
+        filterModal.style.display = 'none';
+    }
+
+    // Toggle cart sidebar visibility
+    const isVisible = cartSidebar.style.right === '0px';
+    cartSidebar.style.right = isVisible ? '-300px' : '0px';
+}
+
+function updateCartSidebar() {
+    const cartItemsContainer = document.getElementById('cartItems');
+    cartItemsContainer.innerHTML = ''; // Clear previous items
+
+    // Fetch cart items from localStorage and render them
+    cart.forEach((item, index) => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+
+        cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="item-details">
+                <p><strong>Name:</strong> ${item.name}</p>
+                <p><strong>Price:</strong> $${item.price}</p>
+                <p><strong>Size:</strong> ${item.size}</p>
+                <p><strong>Category:</strong> ${item.category}</p>
+            </div>
+            <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+
+        cartItemsContainer.appendChild(cartItem);
+    });
+}
+
+
+function removeFromCart(index) {
+    cart.splice(index, 1); // Remove the item from the cart array
+    localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+    updateCartSidebar(); // Re-render the cart sidebar
+    updateCartCount(); // Update the cart count in the navbar
+}
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Hide the modal initially when the page loads
+    const modal = document.getElementById('addToCartModal');
+    modal.style.display = 'none';
+
+    // Select all shirt images
+    const shirts = document.querySelectorAll('.shirt img');
+
+    // Add event listeners to the shirt images
+    shirts.forEach((shirt) => {
+        shirt.addEventListener('click', () => {
+            const shirtName = shirt.alt; // Get the shirt name from the alt attribute
+            const price = 20; // Set a default price or fetch it dynamically from the database
+            const size = shirt.getAttribute('data-size'); // Get the size from the data-size attribute
+            addToCart(shirtName, price, size); // Show the modal with the shirt name and size
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateCartCount();
+    updateCartSidebar();  // Update the sidebar after the page loads
+});
+
+
+
+
+// Function to apply filters and redirect
+function applyFilter() {
+    const filterModal = document.getElementById('filterModal');
+    const category = document.getElementById('filterCategory').value;
+    const size = document.getElementById('sizing').value;
+    filterModal.style.display = 'none'; // Close filter modal
+    window.location.href = `/filter?category=${category}&size=${size}`; // Redirect to filtered page;
+}
+
+// Function to toggle the filter modal visibility
+function toggleFilter() {
+    const filterModal = document.getElementById('filterModal');
+    const cartSidebar = document.getElementById('cartSidebar');
+
+    // Close cart sidebar if it's open
+    if (cartSidebar.style.right === '0px') {
+        cartSidebar.style.right = '-300px';
+    }
+
+    // Toggle filter modal visibility
+    filterModal.style.display = filterModal.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Function to close the filter modal
+function closeFilter() {
+    const filterModal = document.getElementById('filterModal');
+    filterModal.style.display = 'none';
+}
+
+// Close the filter modal when clicking outside
+window.onclick = function(event) {
+    const filterModal = document.getElementById('filterModal');
+    const cartSidebar = document.getElementById('cartSidebar');
+
+    // Close the filter modal when clicking outside
+    if (event.target === filterModal) {
+        filterModal.style.display = 'none';
+    }
+
+    // Close the cart sidebar when clicking outside
+    if (event.target === cartSidebar) {
+        cartSidebar.style.right = '-300px';
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+    updateCartSidebar();
+});
+document.querySelectorAll('.shirt img').forEach(img => {
+    img.addEventListener('click', () => {
+        const name = img.alt; // Extract shirt name from alt text
+        const size = img.getAttribute('data-size'); // Extract size from data attribute
+        const price = 20; // Define a static or dynamic price
+        addToCart(name, price, size); // Call addToCart with these values
+    });
+});
+cart.forEach((item, index) => {
+    const itemElement = document.createElement('div');
+    itemElement.classList.add('cart-item');
+    itemElement.innerHTML =
+        `<div style="display: flex; align-items: center;">
+            <img src="/images/${item.name.toLowerCase().replace(' ', '')}.png" alt="${item.name}" style="width: 50px; height: auto;">
+            <div class="item-details">
+                <span>Name: ${item.name}</span>
+                <span>Price: $${item.price}</span>
+                <span>Size: ${item.size}</span>
+            </div>
+        </div>
+        <button onclick="removeFromCart(${index})">Remove</button>`;
+    cartItemsContainer.appendChild(itemElement);
+});
+
+</script>
+{% endblock %}
