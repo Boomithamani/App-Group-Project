@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Sales Report{% endblock %}
+{% block content %}
+<div id="flash-message" class="flash-overlay hidden">
+    <span id="flash-text"></span>
+</div>
+<!-- sheetjs script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<div class="header">
+    <div class="pagename">
+        <img class="icon" src="static/images/charticon.png">
+        <h3>Sales Report</h3>
+    </div>
+    <span></span>
+    <div class="user">
+        <img class="user_icon" src="./static/images/usericon.png">
+        <h3>Admin</h3>
+    </div>
+</div>
+<div class="main">
+    <div class="table-buttons">
+        <div class="createSale">
+        <!--    {% if count == 0 %}-->
+        <!--    <p>There are no sales.</p>-->
+        <!--    {% elif count == 1 %}-->
+        <!--    <p>There is 1 sale.</p>-->
+        <!--    {% else %}-->
+        <!--    <p>There are {{ count }} sales.</p>-->
+        <!--    {% endif %}-->
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#createSaleModal">
+                Add Sale
+            </button>
+            <div class="modal fade" id="createSaleModal" tabindex="-1" aria-labelledby="createSaleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createSaleModalLabel">Create Sale</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <form method="POST" action="{{ url_for('create_sale') }}">
+                                <div class="form-group">
+                                    <label for="item_name">Item Name</label>
+                                    <input type="text" class="form-control" id="item_name" name="item_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select class="form-control" id="category" name="category" required>
+                                        <option value="W">Women</option>
+                                        <option value="M">Men</option>
+                                        <option value="K">Kids</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity_sold">Quantity Sold</label>
+                                    <input type="number" class="form-control" id="quantity_sold" name="quantity_sold" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="unit_price">Unit Price</label>
+                                    <input type="number" class="form-control" id="unit_price" name="unit_price" step="0.01" min="0.01" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="submit-button" type="submit" class="btn btn-primary">Submit</button>
+                                    <button id="close-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--     search bar   -->
+        <div class="search-bar">
+            <form method="GET" action="{{ url_for('search_sales') }}">
+                <input type="text" name="query" placeholder="Search item name..." value="{{ search_query or '' }}">
+                <button type="submit" id="submit-button" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <!-- filter button -->
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterModal">
+            Filter
+        </button>
+        <!-- filter function modal -->
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filterModalLabel">Filter Sales by Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form method="GET" action="{{ url_for('filter_sales') }}">
+                            <label for="category">Select Category:</label>
+                            <select class="form-control" id="category" name="category">
+                                <option value="">All</option>
+                                <option value="W">Women</option>
+                                <option value="M">Men</option>
+                                <option value="K">Kids</option>
+                            </select>
+                            <div class="modal-footer">
+                                <button type="submit" id="submit-button" class="btn btn-primary">Apply Filter</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="export-button">
+            <button type="button" class="btn btn-success" onclick="exportToExcel()">
+                Export to Excel
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Quantity Sold</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if sales_list %}
+                {% for sale in sales_list %}
+                    <tr>
+                        <td>{{ sale.get_sale_id() }}</td>
+                        <td>{{ sale.get_item_name() }}</td>
+                        {% if sale.get_category() == "W" %}
+                        <td>Women</td>
+                        {% elif sale.get_category() == "M" %}
+                        <td>Men</td>
+                        {% elif sale.get_category() == "K" %}
+                        <td>Kids</td>
+                        {% endif %}
+                        <td>{{ sale.get_quantity_sold() }}</td>
+                        <td>{{ "%.2f" | format(sale.get_unit_price()) }}</td>
+                        <td>{{ "%.2f" | format(sale.get_total_price()) }}</td>
+                        <td>
+                            <!-- Button to trigger modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateSaleModal_{{ sale.get_sale_id() }}">
+                                Update
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="updateSaleModal_{{ sale.get_sale_id() }}" tabindex="-1" aria-labelledby="updateSaleModalLabel_{{ sale.get_sale_id() }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateSaleModalLabel_{{ sale.get_sale_id() }}">Update Sale</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <form method="POST" action="{{ url_for('update_sale', id=sale.get_sale_id()) }}">
+                                                <div class="form-group">
+                                                    <label for="item_name_{{ sale.get_sale_id() }}">Item Name</label>
+                                                    <input type="text" class="form-control" id="item_name_{{ sale.get_sale_id() }}" name="item_name" value="{{ sale.get_item_name() }}" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="category_{{ sale.get_sale_id() }}">Category</label>
+                                                    <select class="form-control" id="category_{{ sale.get_sale_id() }}" name="category" required>
+                                                        <option value="W" {% if sale.get_category() == "W" %}selected{% endif %}>Women</option>
+                                                        <option value="M" {% if sale.get_category() == "M" %}selected{% endif %}>Men</option>
+                                                        <option value="K" {% if sale.get_category() == "K" %}selected{% endif %}>Kids</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="quantity_sold_{{ sale.get_sale_id() }}">Quantity Sold</label>
+                                                    <input type="number" class="form-control" id="quantity_sold_{{ sale.get_sale_id() }}" name="quantity_sold" value="{{ sale.get_quantity_sold() }}" min="1" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="unit_price_{{ sale.get_sale_id() }}">Unit Price</label>
+                                                    <input type="number" class="form-control" id="unit_price_{{ sale.get_sale_id() }}" name="unit_price" value="{{ "%.2f" | format(sale.get_unit_price()) }}" step="0.01" min="0.01" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="submit-button" type="submit" class="btn btn-primary">Save Changes</button>
+                                                    <button id="close-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <form action="{{url_for('delete_sale', id=sale.get_sale_id())}}" method="POST">
+                                <!--<input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete Sale ID:{{sale.get_sale_id()}}, {{sale.get_item_name()}}?');">-->
+                                <!-- Button to Open the Modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal_{{sale.get_sale_id()}}">
+                                  Delete
+                                </button>
+
+                                <!-- The Modal -->
+                                <div class="modal" id="myModal_{{sale.get_sale_id()}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                              <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Delete Confirmation</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                              <!-- Modal body -->
+                                            <div class="modal-body">
+                                                Are you sure you want to delete Sale ID:{{sale.get_sale_id()}}, {{sale.get_item_name()}}?
+                                            </div>
+
+                                              <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">No results found.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+function exportToExcel() {
+    // Select the table
+    let table = document.querySelector("table");
+    let ws = XLSX.utils.table_to_sheet(table);
+
+    let data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+    // Filter last two rows (update and delete button)
+    let filteredData = data.map(row => row.slice(0, -2));
+
+    let newWs =XLSX.utils.aoa_to_sheet(filteredData);
+
+    // Create a new workbook and append the worksheet
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, newWs, "Sales Report");
+
+    // Save the file
+    XLSX.writeFile(wb, "Sales_Report.xlsx");
+}
+</script>
+{% endblock %}
