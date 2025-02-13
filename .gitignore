@@ -1,2 +1,4 @@
-# created by virtualenv automatically
-*
+# Allow specific folders/files
+!SimpleWebApplicationPM/
+!SimpleWebApplicationPM/**
+
