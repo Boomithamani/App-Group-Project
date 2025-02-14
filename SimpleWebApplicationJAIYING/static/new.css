@@ -1,0 +1,121 @@
+/* Navbar Styling */
+.navbar {
+    background-color: white !important; /* Set navbar background to white */
+    border-bottom: 1px solid #ddd; /* Optional: Add a subtle border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+}
+
+.navbar .navbar-brand {
+    color: black !important; /* Icon/logo color */
+    font-weight: bold;
+}
+
+.navbar .nav-link {
+    color: black !important; /* Navbar links color */
+    font-size: 25px;
+    margin-left: auto;
+    font-family: "PT Mono";
+     /* Align links to the right */
+}
+
+.navbar .nav-link:hover {
+    color: gray !important; /* Change link color on hover */
+}
+
+.navbar .dropdown-menu {
+    background-color: white; /* Dropdown background color */
+}
+
+.navbar .dropdown-item {
+    color: black; /* Dropdown item color */
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #f1f1f1; /* Highlight effect on hover */
+}
+
+/* General body styling */
+body {
+  background-color: #ffffff !important;
+  font-family: Trebuchet MS, sans-serif !important;
+}
+
+h1.display-4 {
+    font-size: 28px !important;
+    padding: 20px !important;
+}
+
+.sidebar {
+  position: fixed;
+  margin-top: 12px;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  padding-top: 20px;
+}
+
+.sidebar .nav-item {
+  width: 100%;
+}
+
+.sidebar .nav-link {
+  border-radius: 0;
+  text-align: left;
+  padding: 30px;
+  color: black !important;
+}
+
+.sidebar .nav-link.active {
+  background-color: #D4EED4;
+  color: black;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #ddd;
+}
+
+.tab-content{
+  margin-left: 210px !important;
+  padding-bottom: 50px !important;
+}
+
+
+tr {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #D4EED4 !important;
+  border: none;
+
+}
+
+td {
+  margin-left: 20px;
+  border: none;
+}
+
+.answer {
+  padding: 20px !important;
+}
+
+.tab-content {
+  width: 100%;
+}
+
+
+
+ .question {
+  padding: 15px;
+ }
+
+#social {
+  background-color: #D4EED4;
+  padding: 20px;
+}
+
+#social u {
+  text-decoration-color: black !important ;
+  text-decoration-thickness: 1.3px;
+  text-underline-offset: 5px;
+
+}

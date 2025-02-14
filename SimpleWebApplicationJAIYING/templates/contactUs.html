@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Contact Us{% endblock %}
+
+{% block content %}
+
+<style>
+  button {
+  border: none;
+  background-color: #D4EED4;
+  position: absolute;
+  right: 0;
+  margin-right: 40px;
+  margin-top: -40px;
+  }
+
+
+  .btn {
+  border: black 1px solid;
+  color: white;
+  background-color: black;
+  font-size: 17px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  }
+
+  .btn:hover {
+  color: black;
+  background-color: #c2e7c2;
+  }
+</style>
+<div class="main-container d-flex">
+<h1 class="display-4"></h1>
+<!-- Nav tabs -->
+<div class="d-flex flex-column sidebar">
+  <ul class="nav nav-tabs flex-column">
+    <li class="nav-item">
+      <a class="nav-link active" href="#DIT">Account Management</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#DSF">Order & Delivery</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#DCS">Return & Exchanges</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#DBFT">Payment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#CIP">Social Media & Feedback</a>
+    </li>
+  </ul>
+</div>
+
+
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane container-fluid active" id="DIT">
+    <br>
+    <h2 class = "table">Account Management</h2>
+  <br>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>FAQ</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><div class="question">How do I create an account?</div><button onclick="toggleDisplay('content1')">&#9660;</button></td>
+    </tr>
+    <tr id="content1" class="answer" style="display:none;">
+      <td>&#8226; &nbsp; To create an account, click on the "Sign Up" button at the top of the website and fill in the required details, including your email address and password.</td>
+    </tr>
+    <tr>
+      <td><div class="question">I forgot my password. How can I reset it?</div><button onclick="toggleDisplay('content2')">&#9660;</button></td>
+    </tr>
+    <tr id="content2" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;Click on the "Forgot Password" link on the login page and enter your email address. A password reset link will be sent to your inbox.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">How can I delete my account?</div><button onclick="toggleDisplay('content3')">&#9660;</button></td>
+    </tr>
+    <tr id="content3" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;If you wish to delete your account, go to settings and scroll down to see "Delete Account".</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">How can I update my email address?</div><button onclick="toggleDisplay('content4')">&#9660;</button></td>
+    </tr>
+    <tr id="content4" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;To update your email address, log into your account, go to "Account Settings," and edit your contact information.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">Can I change my username?</div><button onclick="toggleDisplay('content5')">&#9660;</button></td>
+    </tr>
+    <tr id="content5" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;Go to "Account Settings" and click the pencil icon next to your username to make changes.</td>
+    </tr>
+
+
+     </tbody>
+  </table>
+  </div>
+  <div class="tab-pane container-fluid active" id="DSF">
+    <br>
+    <h2 class="title">Order & Delivery</h2>
+    <br>
+  <table class="table">
+      <thead>
+        <tr>
+          <th>FAQ</th>
+        </tr>
+      </thead>
+    <tbody>
+    <tr>
+      <td><div class="question">How do I check the delivery status of my order?</div><button onclick="toggleDisplay('content6')">&#9660;</button></td>
+    </tr>
+    <tr id="content6" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;An email will be sent to you once the order is dispatched and you may check your order status there. <br>&#8226; &nbsp;Alternatively, we partner with SPX Express so you can key in your order reference number on their website.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">What do the order status mean?</div><button onclick="toggleDisplay('content7')">&#9660;</button></td>
+    </tr>
+    <tr id="content7" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;Order Received: Your order has been received and is being processed. <br>&#8226; &nbsp;Order Dispatched: Your order has been dispatched and is on its way to you. <br>&#8226; &nbsp;Order Delivered: Your order has been delivered to you. <br>&#8226; &nbsp;Order Cancelled: Your order has been cancelled.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">What should I do when the tracking link isn't working?</div><button onclick="toggleDisplay('content8')">&#9660;</button></td>
+    </tr>
+    <tr id="content8" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;If the tracking link isn't working, please try again after a few minutes or contact customer service for assistance.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">What are the shipping fees?</div><button onclick="toggleDisplay('content9')">&#9660;</button></td>
+    </tr>
+    <tr id="content9" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;The shipping fees depend on the delivery location and order weight. You can check the exact fees during checkout before finalizing your order.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">Do you offer free shipping?</div><button onclick="toggleDisplay('content10')">&#9660;</button></td>
+    </tr>
+    <tr id="content10" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;Yes, we offer free shipping on orders over a certain amount. Please check the promotions page for more details on eligibility.</td>
+    </tr>
+
+    <tr>
+      <td><div class="question">Can I change my shipping address after placing an order?</div><button onclick="toggleDisplay('content11')">&#9660;</button></td>
+    </tr>
+    <tr id="content11" class="answer" style="display:none;">
+      <td>&#8226; &nbsp;If your order hasn’t been shipped yet, you can contact customer service to request a change in the shipping address. Once the order has shipped, we are unable to make any changes.</td>
+    </tr>
+
+    </tbody>
+    </table>
+    </div>
+
+  <div class="tab-pane container-fluid active" id="DCS">
+    <br>
+    <h2 class = "title">Return & Exchange</h2>
+    <br>
+  <table class="table">
+      <thead>
+        <tr>
+          <th>FAQ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="question">What is your return policy?</div><button onclick="toggleDisplay('content12')">&#9660;</button></td>
+        </tr>
+        <tr id="content12" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Items can be returned within 30 days of delivery. They must be unused and in original packaging. Please visit the Returns & Exchanges page for further instructions.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">How do I exchange an item?</div><button onclick="toggleDisplay('content13')">&#9660;</button></td>
+        </tr>
+        <tr id="content13" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;To exchange an item, please contact our customer service team with your order details. They will guide you through the exchange process.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">How long does it take to process a return?</div><button onclick="toggleDisplay('content14')">&#9660;</button></td>
+        </tr>
+        <tr id="content14" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Once we receive the returned item, please allow up to 7 business days for the return to be processed and for your refund to be issued.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">How will I be refunded for my return?</div><button onclick="toggleDisplay('content15')">&#9660;</button></td>
+        </tr>
+        <tr id="content15" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Refunds will be issued to the original payment method used at checkout. Please note that it may take a few business days for the refund to appear in your account.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">Do I have to pay for return shipping?</div><button onclick="toggleDisplay('content16')">&#9660;</button></td>
+        </tr>
+        <tr id="content16" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Return shipping is typically at the customer's expense, unless the return is due to a defect or error on our part. Please check our Returns & Exchanges page for further details.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">What if my item arrived damaged or defective?</div><button onclick="toggleDisplay('content17')">&#9660;</button></td>
+        </tr>
+        <tr id="content17" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;If your item arrives damaged or defective, please contact our customer service team immediately. We will arrange for a return and issue a full refund or send a replacement.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">Can I return or exchange items purchased with a gift card?</div><button onclick="toggleDisplay('content18')">&#9660;</button></td>
+        </tr>
+        <tr id="content18" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Yes, items purchased with a gift card can be returned or exchanged as long as they meet the return policy criteria. Refunds will be credited to the original gift card.</td>
+        </tr>
+
+      </tbody>
+    </table>
+    </div>
+
+  <div class="tab-pane container-fluid active" id="DBFT">
+    <br>
+    <h2 class ="table">Payment</h2>
+    <br>
+  <table class="table">
+      <thead>
+        <tr>
+          <th>FAQ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="question">What payment methods do you accept?</div><button onclick="toggleDisplay('content19')">&#9660;</button></td>
+        </tr>
+        <tr id="content19" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;We accept major credit and debit cards, PayPal, and other secure payment options available at checkout.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">Can I use multiple payment methods for one order?</div><button onclick="toggleDisplay('content20')">&#9660;</button></td>
+        </tr>
+        <tr id="content20" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Currently, we only allow one payment method per order. Please choose the payment method that works best for you during checkout.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">How do I apply a promo code to my order?</div><button onclick="toggleDisplay('content21')">&#9660;</button></td>
+        </tr>
+        <tr id="content21" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;At checkout, you will find an option to enter your promo code. Simply input the code, and the discount will be applied to your total order amount.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">Is it safe to enter my credit card details on your website?</div><button onclick="toggleDisplay('content22')">&#9660;</button></td>
+        </tr>
+        <tr id="content22" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Yes, our website uses SSL encryption to securely process your payment information. Your data is protected throughout the payment process.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">Can I pay with a gift card?</div><button onclick="toggleDisplay('content23')">&#9660;</button></td>
+        </tr>
+        <tr id="content23" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;Yes, we accept gift cards as a payment method. You can use them just like credit or debit cards at checkout.</td>
+        </tr>
+
+        <tr>
+          <td><div class="question">What should I do if my payment is declined?</div><button onclick="toggleDisplay('content24')">&#9660;</button></td>
+        </tr>
+        <tr id="content24" class="answer" style="display:none;">
+          <td>&#8226; &nbsp;If your payment is declined, please check your card details and ensure there are sufficient funds in your account. If the issue persists, contact your bank or try another payment method.</td>
+        </tr>
+       </tbody>
+    </table>
+    </div>
+  <div class="tab-pane container-fluid active" id="CIP">
+  <br>
+    <h2 class = "table">Social Media & Feedback</h2>
+    <br>
+    <div id = "social">
+      <h3>Follow us on social media!</h3>
+      <h2><a href =""><img src="{{ url_for('static', filename='gmail-icon-free-png.webp') }}" alt="email" height = "40px" width = "40px"></a>
+          <a href =""><img src="{{ url_for('static', filename='instagram-logo-icon-transparent-background-free-png.webp') }}" alt="instagram" height = "60px" width = "60px"></a>
+          <a href =""><img src="{{ url_for('static', filename='tiktok-icon-free-png.webp') }}" alt="tiktok" height = "38px" width = "38px"></a>
+      <br>
+      <br>
+      <h3>We appreciate all your feedbacks!</h3>
+        <h2><a href="/createUser" class="btn">Feedback Form</a></h2>
+    </div>
+  <br>
+  </div>
+</div>
+</div>
+
+
+<script>
+document.querySelectorAll('.nav-link').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    item.classList.add('active');
+  });
+  });
+
+
+function toggleDisplay(contentId) {
+    var div = document.getElementById(contentId);
+    var button = div.previousElementSibling.querySelector('button'); // Get the button inside the previous sibling row
+
+    // Toggle display of the content div
+    if (div.style.display === "none") {
+        div.style.display = "block";
+        button.innerHTML = "&#9650;"; // Change to up arrow
+    } else {
+        div.style.display = "none";
+        button.innerHTML = "&#9660;"; // Change to down arrow
+    }
+}
+</script>
+
+{% endblock %}
+
+
