@@ -2,39 +2,6 @@
 {% block title %}Library Loan System - Retrieve Users{% endblock %}
 
 {% block content %}
-
-<style>
-
-table {
-  border-collapse: collapse !important;
-  width: 100% !important;
-}
-
-table tr {
-  background-color: #e0f7da !important;
-}
-
-table td {
-  padding: 8px !important;
-}
-
-button {
-  background-color: #f9a825;
-  border: none !important;
-  padding: 8px 20px !important;
-  cursor: pointer !important;
-}
-
-button.delete {
-  background-color: #d32f2f ; /* Color for the Delete button */
-}
-
-button:hover {
-  opacity: 0.8 !important;
-}
-
-</style>
-
 <h1 class="display-4">Retrieve Users</h1>
 <div>
   {% if count == 0 %}
@@ -46,16 +13,17 @@ button:hover {
   {% endif %}
 </div>
 <div>
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>User ID</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Email</th>
-        <th>Feedback</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th>Gender</th>
+        <th>Membership</th>
+        <th>Remarks</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -64,7 +32,14 @@ button:hover {
         <td>{{ user.get_user_id() }}</td>
         <td>{{ user.get_first_name() }}</td>
         <td>{{ user.get_last_name() }}</td>
-        <td>{{ user.get_email() }}</td>
+        <td>{{ user.get_gender() }}</td>
+        {% if user.get_membership() == "F" %}
+        <td>Fellow</td>
+        {% elif user.get_membership() == "S" %}
+        <td>Senior</td>
+        {% elif user.get_membership() == "P" %}
+        <td>Professional</td>
+        {% endif %}
         <td>{{ user.get_remarks() }}</td>
         <td><a href="/updateUser/{{user.get_user_id()}}" class="btn btn-warning">Update</a></td>
         <td>
