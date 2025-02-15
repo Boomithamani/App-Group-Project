@@ -1,0 +1,64 @@
+
+{% extends "base.html" %}
+{% block title %}Library Loan System - Create Customer{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+
+    {% if session.get('is_admin') %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='dashboard.css')}}">
+        <h2>Admin Panel</h2>
+
+        <div class="view-users-link">
+            <a href="{{ url_for('view_users') }}">View Registered Users</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if users %}
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td><a class="delete-link" href="{{ url_for('delete_user', id=user.id) }}" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3">No registered users yet.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <h2>User Dashboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if current_user %}  <tr>
+                        <td>{{ current_user.username }}</td>  <td>
+                            <a class="delete-link" href="{{ url_for('delete_user', id=current_user.id) }}" onclick="return confirm('Are you sure you want to delete your account?')">Delete</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="2">User data not found.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <div class="logout-link">
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+{% endblock %}

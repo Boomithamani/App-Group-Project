@@ -1,0 +1,50 @@
+.hero{
+    background-color:#d4eec3;
+    background-size:cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-align: center;
+}
+
+
+.hero .hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-family:Brush Script MT;
+}
+.hero  .hero-text p {
+    font-size: 1.5rem;
+    color:green;
+    font-style:bold;
+    font-family:PT Mono
+}
+
+
+
+
+
+.recommendations {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #f9f9f9;
+    font-family:PT Mono;
+}
+
+.recommendations h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.recommendations .items {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.recommendations .items .item img{
+    border-radius: 10px;
+}
+
